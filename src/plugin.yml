@@ -1,0 +1,9 @@
+name: SimpleMessage
+version: 1.10_STABLE
+author: KhoaHoangVN
+main: vn.khoahoang.simplemsg.SimpleMsg
+
+permissions:
+  simplemsg.protectmode.allowed:
+    description: Allow players to break blocks (pass through the Protect Mode)
+    default: op
