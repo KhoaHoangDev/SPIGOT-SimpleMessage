@@ -2,6 +2,8 @@ package vn.khoahoang.simplemsg;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +33,7 @@ public class SimpleMsg extends JavaPlugin implements Listener {
         this.config.addDefault("nogrief_msg", "&cHey &2%player_name%&c, you cannot break the blocks!");
         this.config.options().copyDefaults(true);
         this.saveConfig();
+        this.getCommand("sannounce").setExecutor(this);
         this.getLogger().info(ChatColor.GREEN + "COMPLETED! Plugin SimpleMessage - Created by KhoaHoangVN");
         if (!config.getBoolean("protectmode_enabled")) {
             this.getLogger().info(ChatColor.AQUA + "Protect Mode turned " + ChatColor.RED + "off!");
@@ -78,8 +81,28 @@ public class SimpleMsg extends JavaPlugin implements Listener {
                 player.sendMessage(PlaceholderAPI.setPlaceholders(player, r3));
                 event.setCancelled(true);
             }
-        }else {
+        } else {
             event.setCancelled(false);
         }
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("sannounce")) {
+            if (sender.isOp()) {
+                if (args.length >= 1) {
+                    String msg = "";
+                    for (int i = 0; args.length != i; i++) {
+                        msg = msg + args[i] + " ";
+                    }
+                    Bukkit.broadcastMessage(ChatColor.GOLD + "[ANNOUNCEMENT] " + sender.getName() + ChatColor.GRAY + " > " + ChatColor.LIGHT_PURPLE + msg);
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Please type the content you want to announce!" + ChatColor.LIGHT_PURPLE + " /sa <msg>");
+                }
+            } else {
+                sender.sendMessage(ChatColor.RED + "You cannot perform this action.");
+            }
+            return true;
+        }
+        return false;
     }
 }
