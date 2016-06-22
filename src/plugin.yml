@@ -1,7 +1,13 @@
 name: SimpleMessage
-version: 1.10_STABLE
+version: 1.20_STABLE
 author: KhoaHoangVN
 main: vn.khoahoang.simplemsg.SimpleMsg
+
+commands:
+  sannounce:
+    description: Make an announcement!
+    usage: /sannounce <msg>
+    aliases: [sa]
 
 permissions:
   simplemsg.protectmode.allowed:
